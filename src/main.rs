@@ -1,5 +1,5 @@
 #![feature(lang_items,asm,plugin,drop_types_in_const)]
-#![plugin(clippy)]
+#![cfg_attr(feature="clippy", plugin(clippy))]
 #![deny(warnings)]
 #![no_std]
 #![no_main]
@@ -29,7 +29,7 @@ use volatile::Volatile;
 static mut PORT: Option<Port> = None;
 static mut WRITER: Option<Uart<'static, 'static>> = None;
 
-#[allow(empty_loop)]
+#[cfg_attr(feature="clippy", allow(empty_loop))]
 extern fn main() {
     unsafe {
         Watchdog::new().disable();
@@ -111,7 +111,7 @@ pub static _FLASHCONFIG: [u8; 16] = [
 
 #[lang = "panic_fmt"]
 #[no_mangle]
-#[allow(empty_loop)]
+#[cfg_attr(feature="clippy", allow(empty_loop))]
 pub extern fn rust_begin_panic(msg: core::fmt::Arguments,
                                file: &'static str,
                                line: u32) -> ! {
